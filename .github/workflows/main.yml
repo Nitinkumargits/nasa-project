@@ -6,8 +6,15 @@ on:
     branches: [ master ]
 jobs:
   build:
-     runs-on: ubuntu-latest
-     steps:
+      env:
+        CI:true
+        MONGO_URL:mongodb://locahost/nasa
+      strategy:
+         matrix :
+            node-version:[14.x,16.x]
+            mongodb-version: ['4.4']
+       runs-on: ubuntu-latest
+       steps:
           - uses: actions/checkout@v4
           - name: Use Node.js version ${{ matrix.node-version }}
             uses: actions/setup-node@v4
